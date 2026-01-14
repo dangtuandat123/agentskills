@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineVerse - Xem Phim Online HD</title>
+  <meta name="description" content="Xem phim online miễn phí, chất lượng HD, phụ đề Việt">
+  
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      /* Color Palette */
+      --color-primary: #e11d48;
+      --color-primary-glow: rgba(225, 29, 72, 0.4);
+      --color-accent-gold: #fbbf24;
+      --color-accent-cyan: #06b6d4;
+      
+      --color-surface-base: #0a0a0a;
+      --color-surface-elevated: #141414;
+      --color-surface-glass: rgba(255, 255, 255, 0.03);
+      --color-surface-glass-hover: rgba(255, 255, 255, 0.06);
+      
+      --color-text-primary: #ffffff;
+      --color-text-secondary: rgba(255, 255, 255, 0.7);
+      --color-text-muted: rgba(255, 255, 255, 0.5);
+      
+      --color-border-subtle: rgba(255, 255, 255, 0.08);
+      --color-border-default: rgba(255, 255, 255, 0.15);
+      
+      /* Typography */
+      --font-main: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+      
+      /* Spacing */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      
+      /* Z-Index */
+      --z-header: 100;
+      --z-modal: 999;
+      --z-toast: 1000;
+      
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Radius */
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
+      --radius-full: 9999px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-main);
+      background-color: var(--color-surface-base);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--color-surface-base); }
+    ::-webkit-scrollbar-thumb { background: var(--color-border-default); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+    /* Focus */
+    *:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+    /* Container */
+    .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 var(--space-4); }
+    @media (min-width: 768px) { .container { padding: 0 var(--space-6); } }
+
+    /* ========== HEADER ========== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-header);
+      background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+      padding: var(--space-4) 0;
+      transition: background var(--transition-base);
+    }
+    .header.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .logo i { font-size: 1.25rem; }
+    
+    .nav-desktop { display: none; }
+    @media (min-width: 768px) {
+      .nav-desktop {
+        display: flex;
+        align-items: center;
+        gap: var(--space-6);
+      }
+    }
+    .nav-link {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color var(--transition-fast);
+    }
+    .nav-link:hover { color: var(--color-text-primary); }
+    .nav-link.active { color: var(--color-primary); }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .search-box {
+      display: none;
+      align-items: center;
+      background: var(--color-surface-glass);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-4);
+      transition: all var(--transition-base);
+    }
+    @media (min-width: 640px) { .search-box { display: flex; } }
+    .search-box:focus-within {
+      background: var(--color-surface-glass-hover);
+      border-color: var(--color-primary);
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--color-text-primary);
+      width: 160px;
+      font-size: 0.875rem;
+    }
+    .search-box input::placeholder { color: var(--color-text-muted); }
+    .search-box i { color: var(--color-text-muted); margin-right: var(--space-2); }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      background: var(--color-surface-glass);
+      border: 1px solid var(--color-border-subtle);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .btn-icon:hover {
+      background: var(--color-surface-glass-hover);
+      color: var(--color-text-primary);
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-primary), #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      position: relative;
+      height: 85vh;
+      min-height: 500px;
+      max-height: 800px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: var(--space-8);
+      margin-top: 0;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.7) 40%, rgba(10,10,10,0.3) 70%, transparent 100%),
+                  linear-gradient(0deg, var(--color-surface-base) 0%, transparent 40%);
+    }
+    .hero-content {
+      position: relative;
+      max-width: 600px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(225, 29, 72, 0.2);
+      border: 1px solid rgba(225, 29, 72, 0.3);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .hero-meta .rating {
+      color: var(--color-accent-gold);
+      font-weight: 600;
+    }
+    .hero-meta .rating i { margin-right: 4px; }
+    .hero-desc {
+      color: var(--color-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-6);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-primary);
+      color: white;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      box-shadow: 0 4px 20px var(--color-primary-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--color-primary-glow);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: var(--color-surface-glass);
+      backdrop-filter: blur(10px);
+      color: var(--color-text-primary);
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: 1px solid var(--color-border-default);
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+    .btn-secondary:hover {
+      background: var(--color-surface-glass-hover);
+      border-color: var(--color-text-muted);
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      padding: var(--space-8) 0;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .section-title i { color: var(--color-primary); }
+    .see-all {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: color var(--transition-fast);
+    }
+    .see-all:hover { color: var(--color-primary); }
+
+    /* ========== MOVIE GRID ========== */
+    .movie-grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 640px) { .movie-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .movie-grid { grid-template-columns: repeat(4, 1fr); gap: var(--space-5); } }
+    @media (min-width: 1024px) { .movie-grid { grid-template-columns: repeat(5, 1fr); } }
+    @media (min-width: 1280px) { .movie-grid { grid-template-columns: repeat(6, 1fr); } }
+
+    /* ========== MOVIE CARD ========== */
+    .movie-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--color-surface-elevated);
+      transition: all var(--transition-base);
+      cursor: pointer;
+    }
+    .movie-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 40px var(--color-primary-glow);
+    }
+    .movie-card-poster {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+    }
+    .movie-card-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-base);
+    }
+    .movie-card:hover .movie-card-poster img { transform: scale(1.1); }
+    
+    .movie-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .movie-card:hover .movie-card-overlay { opacity: 1; }
+    
+    .play-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      transform: scale(0);
+      transition: transform var(--transition-base);
+      box-shadow: 0 0 30px var(--color-primary-glow);
+    }
+    .movie-card:hover .play-btn { transform: scale(1); }
+    .play-btn i { margin-left: 4px; }
+
+    .movie-card-badge {
+      position: absolute;
+      top: var(--space-2);
+      left: var(--space-2);
+      background: var(--color-primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: var(--radius-md);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .movie-card-badge.hd { background: var(--color-accent-cyan); }
+    .movie-card-badge.vip { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+
+    .movie-card-rating {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      padding: 2px 8px;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .movie-card-content {
+      padding: var(--space-3);
+    }
+    .movie-card-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .movie-card-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ========== CATEGORY TABS ========== */
+    .category-tabs {
+      display: flex;
+      gap: var(--space-2);
+      overflow-x: auto;
+      padding-bottom: var(--space-2);
+      margin-bottom: var(--space-6);
+      scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .category-tab {
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-surface-glass);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--color-text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .category-tab:hover {
+      background: var(--color-surface-glass-hover);
+      color: var(--color-text-primary);
+    }
+    .category-tab.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+
+    /* ========== CONTINUE WATCHING ========== */
+    .continue-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--color-surface-elevated);
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+    .continue-card:hover { transform: scale(1.02); }
+    .continue-card-image {
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+    .continue-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .continue-card-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 50%);
+    }
+    .continue-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.2);
+    }
+    .continue-progress-bar {
+      height: 100%;
+      background: var(--color-primary);
+    }
+    .continue-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-4);
+    }
+    .continue-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+    .continue-card-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .continue-grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) { .continue-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .continue-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ========== GENRES SECTION ========== */
+    .genres-grid {
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 640px) { .genres-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .genres-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (min-width: 1024px) { .genres-grid { grid-template-columns: repeat(6, 1fr); } }
+
+    .genre-card {
+      position: relative;
+      aspect-ratio: 16/9;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+    .genre-card:hover { transform: scale(1.05); }
+    .genre-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-base);
+    }
+    .genre-card:hover img { transform: scale(1.1); }
+    .genre-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.7), rgba(0, 0, 0, 0.5));
+    }
+    .genre-card span {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--color-surface-elevated);
+      border-top: 1px solid var(--color-border-subtle);
+      padding: var(--space-8) 0;
+      margin-top: var(--space-8);
+    }
+    .footer-content {
+      display: grid;
+      gap: var(--space-8);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .footer-content { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+    
+    .footer-brand p {
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      margin-top: var(--space-3);
+      line-height: 1.7;
+    }
+    .footer-social {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: var(--color-surface-glass);
+      border: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      transition: all var(--transition-fast);
+    }
+    .footer-social a:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+    }
+    .footer-title {
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .footer-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color var(--transition-fast);
+    }
+    .footer-links a:hover { color: var(--color-primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--color-border-subtle);
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ========== MOBILE NAV ========== */
+    .mobile-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--color-border-subtle);
+      padding: var(--space-2) 0;
+      z-index: var(--z-header);
+      display: flex;
+    }
+    @media (min-width: 768px) { .mobile-nav { display: none; } }
+    .mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: var(--space-2);
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.65rem;
+      transition: color var(--transition-fast);
+    }
+    .mobile-nav-item i { font-size: 1.25rem; }
+    .mobile-nav-item:hover, .mobile-nav-item.active { color: var(--color-primary); }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.6s ease forwards; }
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+
+    /* Padding bottom for mobile nav */
+    @media (max-width: 767px) {
+      .footer { padding-bottom: 80px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="#" class="logo">
+          <i class="fa-solid fa-clapperboard"></i>
+          CineVerse
+        </a>
+
+        <nav class="nav-desktop">
+          <a href="#" class="nav-link active">Trang chủ</a>
+          <a href="#" class="nav-link">Phim lẻ</a>
+          <a href="#" class="nav-link">Phim bộ</a>
+          <a href="#" class="nav-link">TV Shows</a>
+          <a href="#" class="nav-link">Anime</a>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Tìm phim...">
+          </div>
+          <button class="btn-icon" aria-label="Thông báo">
+            <i class="fa-regular fa-bell"></i>
+          </button>
+          <div class="avatar">A</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://image.tmdb.org/t/p/original/628Dep6AxEtDxjZoGP78TsOxYbK.jpg" alt="Dune: Part Two">
+    </div>
+    <div class="container">
+      <div class="hero-content animate-fadeInUp">
+        <span class="hero-badge">
+          <i class="fa-solid fa-fire"></i>
+          Phim hot nhất
+        </span>
+        <h1 class="hero-title">Dune: Hành Tinh Cát - Phần Hai</h1>
+        <div class="hero-meta">
+          <span class="rating"><i class="fa-solid fa-star"></i> 8.5</span>
+          <span class="hero-meta-item"><i class="fa-regular fa-calendar"></i> 2024</span>
+          <span class="hero-meta-item"><i class="fa-regular fa-clock"></i> 166 phút</span>
+          <span class="hero-meta-item">Vietsub + Thuyết minh</span>
+        </div>
+        <p class="hero-desc">
+          Paul Atreides gia nhập với những chiến binh Fremen để trả thù cho gia tộc của mình sau khi họ bị phản bội. 
+          Anh phải đưa ra lựa chọn giữa tình yêu và số phận của vũ trụ để ngăn chặn cuộc chiến tàn khốc.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary">
+            <i class="fa-solid fa-play"></i>
+            Xem ngay
+          </button>
+          <button class="btn-secondary">
+            <i class="fa-regular fa-bookmark"></i>
+            Thêm vào danh sách
+          </button>
+          <button class="btn-secondary">
+            <i class="fa-solid fa-circle-info"></i>
+            Chi tiết
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTINUE WATCHING -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-history"></i>
+          Tiếp tục xem
+        </h2>
+        <a href="#" class="see-all">
+          Xem tất cả <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+      <div class="continue-grid">
+        <div class="continue-card">
+          <div class="continue-card-image">
+            <img src="https://image.tmdb.org/t/p/w780/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg" alt="Oppenheimer">
+            <div class="continue-progress"><div class="continue-progress-bar" style="width: 65%"></div></div>
+          </div>
+          <div class="continue-card-content">
+            <h3 class="continue-card-title">Oppenheimer</h3>
+            <span class="continue-card-meta">Còn 58 phút</span>
+          </div>
+        </div>
+        <div class="continue-card">
+          <div class="continue-card-image">
+            <img src="https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Squid Game">
+            <div class="continue-progress"><div class="continue-progress-bar" style="width: 30%"></div></div>
+          </div>
+          <div class="continue-card-content">
+            <h3 class="continue-card-title">Trò Chơi Con Mực - S2E3</h3>
+            <span class="continue-card-meta">Còn 42 phút</span>
+          </div>
+        </div>
+        <div class="continue-card">
+          <div class="continue-card-image">
+            <img src="https://image.tmdb.org/t/p/w780/zVMyvNowgbsBAL6O6esWfRpAcOb.jpg" alt="The Penguin">
+            <div class="continue-progress"><div class="continue-progress-bar" style="width: 80%"></div></div>
+          </div>
+          <div class="continue-card-content">
+            <h3 class="continue-card-title">The Penguin - Tập 5</h3>
+            <span class="continue-card-meta">Còn 12 phút</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+          Thịnh hành
+        </h2>
+        <a href="#" class="see-all">
+          Xem tất cả <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+      <div class="category-tabs" role="tablist">
+        <button class="category-tab active" role="tab">Tất cả</button>
+        <button class="category-tab" role="tab">Phim lẻ</button>
+        <button class="category-tab" role="tab">Phim bộ</button>
+        <button class="category-tab" role="tab">Anime</button>
+        <button class="category-tab" role="tab">Hàn Quốc</button>
+        <button class="category-tab" role="tab">Trung Quốc</button>
+      </div>
+      <div class="movie-grid">
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg" alt="Deadpool & Wolverine">
+            <span class="movie-card-badge">Mới</span>
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.2</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Deadpool & Wolverine</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>Hành động</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg" alt="Inside Out 2">
+            <span class="movie-card-badge hd">4K</span>
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 7.9</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Inside Out 2</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>Hoạt hình</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Squid Game 2">
+            <span class="movie-card-badge">Hot</span>
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.1</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Squid Game Phần 2</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>16 tập</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg" alt="Godzilla x Kong">
+            <span class="movie-card-badge hd">IMAX</span>
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 7.5</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Godzilla x Kong</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>Hành động</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/aosm8NMQ3UyoBVpSxyimorCQykC.jpg" alt="Furiosa">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 7.8</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Furiosa: Câu Saga Mad Max</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>Phiêu lưu</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/mDeUmPe4MF35WWlAqj4QFX5UauJ.jpg" alt="Kingdom of the Planet of the Apes">
+            <span class="movie-card-badge vip">VIP</span>
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 7.4</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Hành Tinh Khỉ: Vương Quốc Mới</h3>
+            <div class="movie-card-meta">
+              <span>2024</span>
+              <span>•</span>
+              <span>Khoa học</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENRES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-layer-group"></i>
+          Thể loại
+        </h2>
+      </div>
+      <div class="genres-grid">
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/628Dep6AxEtDxjZoGP78TsOxYbK.jpg" alt="Hành động">
+          <span>Hành động</span>
+        </div>
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg" alt="Chính kịch">
+          <span>Chính kịch</span>
+        </div>
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg" alt="Khoa học viễn tưởng">
+          <span>Khoa học</span>
+        </div>
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg" alt="Hoạt hình">
+          <span>Hoạt hình</span>
+        </div>
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Kinh dị">
+          <span>Kinh dị</span>
+        </div>
+        <div class="genre-card">
+          <img src="https://image.tmdb.org/t/p/w500/aosm8NMQ3UyoBVpSxyimorCQykC.jpg" alt="Phiêu lưu">
+          <span>Phiêu lưu</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP RATED -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-ranking-star"></i>
+          Phim được đánh giá cao
+        </h2>
+        <a href="#" class="see-all">
+          Xem tất cả <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+      <div class="movie-grid">
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/hek3koDUyRQq7gkV3YDiSgpABTa.jpg" alt="The Batman">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.6</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">The Batman</h3>
+            <div class="movie-card-meta">
+              <span>2022</span>
+              <span>•</span>
+              <span>Hành động</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg" alt="Oppenheimer">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.9</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Oppenheimer</h3>
+            <div class="movie-card-meta">
+              <span>2023</span>
+              <span>•</span>
+              <span>Lịch sử</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg" alt="John Wick 4">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.4</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">John Wick: Chapter 4</h3>
+            <div class="movie-card-meta">
+              <span>2023</span>
+              <span>•</span>
+              <span>Hành động</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Interstellar">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 9.0</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Interstellar</h3>
+            <div class="movie-card-meta">
+              <span>2014</span>
+              <span>•</span>
+              <span>Khoa học</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg" alt="Fight Club">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.8</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Fight Club</h3>
+            <div class="movie-card-meta">
+              <span>1999</span>
+              <span>•</span>
+              <span>Tâm lý</span>
+            </div>
+          </div>
+        </article>
+        <article class="movie-card">
+          <div class="movie-card-poster">
+            <img src="https://image.tmdb.org/t/p/w500/cMiLga2wRazOyAP1RXWXeMh7bUf.jpg" alt="Parasite">
+            <span class="movie-card-rating"><i class="fa-solid fa-star"></i> 8.5</span>
+            <div class="movie-card-overlay">
+              <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+          <div class="movie-card-content">
+            <h3 class="movie-card-title">Ký Sinh Trùng</h3>
+            <div class="movie-card-meta">
+              <span>2019</span>
+              <span>•</span>
+              <span>Hài kịch</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <i class="fa-solid fa-clapperboard"></i>
+            CineVerse
+          </a>
+          <p>Xem phim online chất lượng cao, phụ đề Việt. Cập nhật phim mới nhanh nhất, nhiều thể loại phong phú.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Thể loại</h4>
+          <div class="footer-links">
+            <a href="#">Hành động</a>
+            <a href="#">Tình cảm</a>
+            <a href="#">Hài hước</a>
+            <a href="#">Kinh dị</a>
+            <a href="#">Hoạt hình</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Quốc gia</h4>
+          <div class="footer-links">
+            <a href="#">Phim Mỹ</a>
+            <a href="#">Phim Hàn Quốc</a>
+            <a href="#">Phim Trung Quốc</a>
+            <a href="#">Phim Nhật Bản</a>
+            <a href="#">Phim Việt Nam</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-title">Hỗ trợ</h4>
+          <div class="footer-links">
+            <a href="#">FAQ</a>
+            <a href="#">Liên hệ</a>
+            <a href="#">Điều khoản</a>
+            <a href="#">Chính sách</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 CineVerse. All rights reserved. Phát triển bởi Antigravity.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav">
+    <a href="#" class="mobile-nav-item active">
+      <i class="fa-solid fa-house"></i>
+      <span>Trang chủ</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Tìm kiếm</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i class="fa-solid fa-compass"></i>
+      <span>Khám phá</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i class="fa-regular fa-bookmark"></i>
+      <span>Bộ sưu tập</span>
+    </a>
+    <a href="#" class="mobile-nav-item">
+      <i class="fa-regular fa-user"></i>
+      <span>Tài khoản</span>
+    </a>
+  </nav>
+
+  <script>
+    $(document).ready(function() {
+      // Header scroll effect
+      $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 50) {
+          $('#header').addClass('scrolled');
+        } else {
+          $('#header').removeClass('scrolled');
+        }
+      });
+
+      // Category tabs
+      $('.category-tab').on('click', function() {
+        $('.category-tab').removeClass('active');
+        $(this).addClass('active');
+      });
+
+      // Movie card hover sound effect (optional)
+      $('.movie-card').on('mouseenter', function() {
+        $(this).find('.play-btn').css('transform', 'scale(1)');
+      });
+
+      // Mobile nav active state
+      $('.mobile-nav-item').on('click', function(e) {
+        e.preventDefault();
+        $('.mobile-nav-item').removeClass('active');
+        $(this).addClass('active');
+      });
+
+      // Smooth scroll for internal links
+      $('a[href^="#"]').on('click', function(e) {
+        const target = $(this.getAttribute('href'));
+        if (target.length) {
+          e.preventDefault();
+          $('html, body').animate({ scrollTop: target.offset().top - 80 }, 500);
+        }
+      });
+
+      // Lazy load animation on scroll
+      const observerOptions = { threshold: 0.1, rootMargin: '50px' };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fadeInUp');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.movie-card, .continue-card, .genre-card').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

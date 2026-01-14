@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Cưới - Minh Anh & Hoàng Nam</title>
+    <meta name="description" content="Thiệp mời đám cưới của Minh Anh và Hoàng Nam. Hân hạnh được đón tiếp quý khách.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'script': ['Great Vibes', 'cursive'],
+                        'serif': ['Cormorant Garamond', 'serif'],
+                        'sans': ['Be Vietnam Pro', 'sans-serif'],
+                    },
+                    colors: {
+                        'rose-gold': '#b76e79',
+                        'champagne': '#f7e7ce',
+                        'blush': '#ffc0cb',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background: linear-gradient(135deg, #1a0a14 0%, #2d1f3d 50%, #1a0a14 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(183, 110, 121, 0.3);
+            animation: floatHeart 15s infinite ease-in-out;
+            will-change: transform;
+        }
+        
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Glass Effect Classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(183, 110, 121, 0.25);
+        }
+        
+        .glass-input {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-input:focus {
+            outline: none;
+            border-color: rgba(183, 110, 121, 0.5);
+            box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.2);
+        }
+        
+        /* Shimmer Effect */
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Glow Effect */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(183, 110, 121, 0.5),
+                         0 0 80px rgba(183, 110, 121, 0.3);
+        }
+        
+        .glow-border {
+            box-shadow: 0 0 30px rgba(183, 110, 121, 0.3),
+                        inset 0 0 30px rgba(183, 110, 121, 0.1);
+        }
+        
+        /* Floating Animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Pulse Ring */
+        .pulse-ring {
+            animation: pulseRing 2s ease-out infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Timeline Styles */
+        .timeline-line {
+            background: linear-gradient(180deg, 
+                rgba(183, 110, 121, 0) 0%,
+                rgba(183, 110, 121, 0.5) 10%,
+                rgba(183, 110, 121, 0.5) 90%,
+                rgba(183, 110, 121, 0) 100%
+            );
+        }
+        
+        .timeline-dot {
+            background: linear-gradient(135deg, #b76e79, #f7e7ce);
+            box-shadow: 0 0 20px rgba(183, 110, 121, 0.5);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #b76e79 0%, #d4a574 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 16px 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(183, 110, 121, 0.4);
+        }
+        
+        .btn-primary:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.5);
+        }
+        
+        /* Countdown Styles */
+        .countdown-item {
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 110, 121, 0.3);
+            border-radius: 16px;
+        }
+        
+        /* Section Divider */
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b76e79, transparent);
+            margin: 0 auto;
+        }
+        
+        .divider-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #b76e79, #d4a574);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -20px auto 0;
+            color: white;
+        }
+        
+        /* Gallery Grid */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            aspect-ratio: 1;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Scroll to top */
+        .scroll-top {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #b76e79, #d4a574);
+            border-radius: 4px;
+        }
+        
+        /* Image Placeholder Gradient */
+        .img-placeholder {
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.3) 0%, rgba(212, 165, 116, 0.3) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="text-white/90">
+    <!-- Floating Hearts Background -->
+    <div class="hearts-bg" id="hearts-container"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="glass-panel px-6 py-4 flex items-center justify-between">
+                <a href="#" class="font-script text-2xl text-rose-gold">M & N</a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-white/70 hover:text-white transition-colors">Trang chủ</a>
+                    <a href="#couple" class="text-white/70 hover:text-white transition-colors">Cô dâu & Chú rể</a>
+                    <a href="#events" class="text-white/70 hover:text-white transition-colors">Sự kiện</a>
+                    <a href="#story" class="text-white/70 hover:text-white transition-colors">Chuyện tình yêu</a>
+                    <a href="#gallery" class="text-white/70 hover:text-white transition-colors">Album</a>
+                    <a href="#rsvp" class="btn-primary text-sm py-2 px-6">Xác nhận tham dự</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-white/70 hover:text-white p-2" aria-label="Mở menu">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+        <button id="close-menu" class="absolute top-6 right-6 text-white/70 hover:text-white" aria-label="Đóng menu">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <a href="#home" class="text-2xl text-white/70 hover:text-white transition-colors mobile-link">Trang chủ</a>
+        <a href="#couple" class="text-2xl text-white/70 hover:text-white transition-colors mobile-link">Cô dâu & Chú rể</a>
+        <a href="#events" class="text-2xl text-white/70 hover:text-white transition-colors mobile-link">Sự kiện</a>
+        <a href="#story" class="text-2xl text-white/70 hover:text-white transition-colors mobile-link">Chuyện tình yêu</a>
+        <a href="#gallery" class="text-2xl text-white/70 hover:text-white transition-colors mobile-link">Album</a>
+        <a href="#rsvp" class="btn-primary mobile-link">Xác nhận tham dự</a>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center px-4 pt-24">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-gold/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-champagne/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="relative z-10 text-center max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <p class="text-rose-gold text-lg mb-4 tracking-widest uppercase">Save the Date</p>
+            
+            <h1 class="font-script text-6xl md:text-8xl lg:text-9xl text-white glow-text mb-6">
+                Minh Anh
+                <span class="block text-rose-gold text-4xl md:text-5xl my-4">&</span>
+                Hoàng Nam
+            </h1>
+            
+            <p class="font-serif text-xl md:text-2xl text-white/70 mb-8 italic">
+                "Hai trái tim, một tình yêu, mãi mãi bên nhau"
+            </p>
+            
+            <div class="glass-card inline-block px-8 py-4 mb-12 glow-border">
+                <p class="font-serif text-2xl md:text-3xl text-champagne">
+                    <i class="fas fa-calendar-alt mr-3 text-rose-gold"></i>
+                    15 . 02 . 2026
+                </p>
+            </div>
+            
+            <!-- Countdown Timer -->
+            <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+                <div class="countdown-item p-4 md:p-6">
+                    <span id="days" class="block text-4xl md:text-5xl font-bold text-rose-gold">00</span>
+                    <span class="text-white/50 text-sm uppercase tracking-wider">Ngày</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6">
+                    <span id="hours" class="block text-4xl md:text-5xl font-bold text-rose-gold">00</span>
+                    <span class="text-white/50 text-sm uppercase tracking-wider">Giờ</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6">
+                    <span id="minutes" class="block text-4xl md:text-5xl font-bold text-rose-gold">00</span>
+                    <span class="text-white/50 text-sm uppercase tracking-wider">Phút</span>
+                </div>
+                <div class="countdown-item p-4 md:p-6">
+                    <span id="seconds" class="block text-4xl md:text-5xl font-bold text-rose-gold">00</span>
+                    <span class="text-white/50 text-sm uppercase tracking-wider">Giây</span>
+                </div>
+            </div>
+            
+            <a href="#rsvp" class="btn-primary inline-block text-lg">
+                <i class="fas fa-heart mr-2"></i> Xác nhận tham dự
+            </a>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 float">
+            <a href="#couple" class="text-white/50 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Couple Section -->
+    <section id="couple" class="relative py-24 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <p class="text-rose-gold uppercase tracking-widest mb-4">Happy Wedding</p>
+                <h2 class="font-script text-5xl md:text-6xl text-white mb-4">Cô Dâu & Chú Rể</h2>
+                <div class="divider"></div>
+                <div class="divider-icon">
+                    <i class="fas fa-heart text-sm"></i>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-16">
+                <!-- Bride -->
+                <div class="glass-card p-8 text-center shimmer" data-aos="fade-right" data-aos-delay="100">
+                    <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-rose-gold/30 img-placeholder">
+                        <div class="w-full h-full flex items-center justify-center">
+                            <i class="fas fa-user text-6xl text-rose-gold/50"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-script text-4xl text-rose-gold mb-2">Minh Anh</h3>
+                    <p class="text-champagne font-serif text-xl mb-4">Cô Dâu</p>
+                    <p class="text-white/60 mb-6 leading-relaxed">
+                        Con gái của Ông Nguyễn Văn A<br>
+                        và Bà Trần Thị B<br>
+                        Quận 1, TP. Hồ Chí Minh
+                    </p>
+                    <div class="flex justify-center gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rose-gold/50 transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rose-gold/50 transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Groom -->
+                <div class="glass-card p-8 text-center shimmer" data-aos="fade-left" data-aos-delay="200">
+                    <div class="w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden border-4 border-rose-gold/30 img-placeholder">
+                        <div class="w-full h-full flex items-center justify-center">
+                            <i class="fas fa-user text-6xl text-rose-gold/50"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-script text-4xl text-rose-gold mb-2">Hoàng Nam</h3>
+                    <p class="text-champagne font-serif text-xl mb-4">Chú Rể</p>
+                    <p class="text-white/60 mb-6 leading-relaxed">
+                        Con trai của Ông Lê Văn C<br>
+                        và Bà Phạm Thị D<br>
+                        Quận 7, TP. Hồ Chí Minh
+                    </p>
+                    <div class="flex justify-center gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rose-gold/50 transition-colors" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rose-gold/50 transition-colors" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Events Section -->
+    <section id="events" class="relative py-24 px-4">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-rose-gold/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <p class="text-rose-gold uppercase tracking-widest mb-4">Wedding Events</p>
+                <h2 class="font-script text-5xl md:text-6xl text-white mb-4">Sự Kiện Cưới</h2>
+                <div class="divider"></div>
+                <div class="divider-icon">
+                    <i class="fas fa-ring text-sm"></i>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Lễ Vu Quy -->
+                <div class="glass-card p-8 glow-border" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-rose-gold to-champagne flex items-center justify-center">
+                            <i class="fas fa-home text-2xl text-white"></i>
+                        </div>
+                        <h3 class="font-script text-3xl text-rose-gold mb-2">Lễ Vu Quy</h3>
+                        <p class="text-champagne font-serif text-lg mb-6">Nhà gái</p>
+                        
+                        <div class="space-y-4 text-white/70">
+                            <p>
+                                <i class="fas fa-calendar mr-2 text-rose-gold"></i>
+                                08:00 - Thứ Bảy, 14/02/2026
+                            </p>
+                            <p>
+                                <i class="fas fa-map-marker-alt mr-2 text-rose-gold"></i>
+                                123 Nguyễn Huệ, Quận 1<br>
+                                TP. Hồ Chí Minh
+                            </p>
+                        </div>
+                        
+                        <a href="https://maps.google.com" target="_blank" rel="noopener" 
+                           class="inline-flex items-center mt-6 text-rose-gold hover:text-champagne transition-colors">
+                            <i class="fas fa-directions mr-2"></i> Xem bản đồ
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Lễ Thành Hôn -->
+                <div class="glass-card p-8 glow-border" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-rose-gold to-champagne flex items-center justify-center">
+                            <i class="fas fa-church text-2xl text-white"></i>
+                        </div>
+                        <h3 class="font-script text-3xl text-rose-gold mb-2">Lễ Thành Hôn</h3>
+                        <p class="text-champagne font-serif text-lg mb-6">Tiệc cưới</p>
+                        
+                        <div class="space-y-4 text-white/70">
+                            <p>
+                                <i class="fas fa-calendar mr-2 text-rose-gold"></i>
+                                18:00 - Chủ Nhật, 15/02/2026
+                            </p>
+                            <p>
+                                <i class="fas fa-map-marker-alt mr-2 text-rose-gold"></i>
+                                Trung tâm Hội nghị ABC<br>
+                                456 Lê Lợi, Quận 1, TP.HCM
+                            </p>
+                        </div>
+                        
+                        <a href="https://maps.google.com" target="_blank" rel="noopener"
+                           class="inline-flex items-center mt-6 text-rose-gold hover:text-champagne transition-colors">
+                            <i class="fas fa-directions mr-2"></i> Xem bản đồ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Love Story Timeline -->
+    <section id="story" class="relative py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <p class="text-rose-gold uppercase tracking-widest mb-4">Our Journey</p>
+                <h2 class="font-script text-5xl md:text-6xl text-white mb-4">Chuyện Tình Yêu</h2>
+                <div class="divider"></div>
+                <div class="divider-icon">
+                    <i class="fas fa-heart text-sm"></i>
+                </div>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-1/2 -translate-x-1/2 w-1 h-full timeline-line hidden md:block"></div>
+                
+                <!-- Timeline Items -->
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:justify-between" data-aos="fade-up">
+                        <div class="md:w-5/12 md:text-right order-2 md:order-1">
+                            <div class="glass-card p-6">
+                                <span class="text-rose-gold font-serif">Tháng 6, 2020</span>
+                                <h4 class="font-script text-2xl text-white my-2">Lần đầu gặp gỡ</h4>
+                                <p class="text-white/60">Chúng tôi gặp nhau tại một buổi họp mặt bạn bè. Ánh mắt đầu tiên đã nói lên tất cả.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot w-4 h-4 rounded-full z-10 order-1 md:order-2 my-4 md:my-0">
+                            <div class="absolute w-8 h-8 -left-2 -top-2 rounded-full border-2 border-rose-gold/50 pulse-ring"></div>
+                        </div>
+                        <div class="md:w-5/12 order-3"></div>
+                    </div>
+                    
+                    <!-- Item 2 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:justify-between" data-aos="fade-up" data-aos-delay="100">
+                        <div class="md:w-5/12 order-2"></div>
+                        <div class="timeline-dot w-4 h-4 rounded-full z-10 order-1 my-4 md:my-0">
+                            <div class="absolute w-8 h-8 -left-2 -top-2 rounded-full border-2 border-rose-gold/50 pulse-ring"></div>
+                        </div>
+                        <div class="md:w-5/12 md:text-left order-3 md:order-3">
+                            <div class="glass-card p-6">
+                                <span class="text-rose-gold font-serif">Tháng 12, 2020</span>
+                                <h4 class="font-script text-2xl text-white my-2">Chính thức yêu nhau</h4>
+                                <p class="text-white/60">Sau 6 tháng tìm hiểu, anh đã tỏ tình dưới ánh đèn Giáng sinh lung linh.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 3 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:justify-between" data-aos="fade-up" data-aos-delay="200">
+                        <div class="md:w-5/12 md:text-right order-2 md:order-1">
+                            <div class="glass-card p-6">
+                                <span class="text-rose-gold font-serif">Tháng 8, 2023</span>
+                                <h4 class="font-script text-2xl text-white my-2">Du lịch cùng nhau</h4>
+                                <p class="text-white/60">Chuyến du lịch Đà Lạt đầu tiên, nơi tình yêu được nuôi dưỡng và lớn lên.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-dot w-4 h-4 rounded-full z-10 order-1 md:order-2 my-4 md:my-0">
+                            <div class="absolute w-8 h-8 -left-2 -top-2 rounded-full border-2 border-rose-gold/50 pulse-ring"></div>
+                        </div>
+                        <div class="md:w-5/12 order-3"></div>
+                    </div>
+                    
+                    <!-- Item 4 -->
+                    <div class="relative flex flex-col md:flex-row items-center md:justify-between" data-aos="fade-up" data-aos-delay="300">
+                        <div class="md:w-5/12 order-2"></div>
+                        <div class="timeline-dot w-4 h-4 rounded-full z-10 order-1 my-4 md:my-0">
+                            <div class="absolute w-8 h-8 -left-2 -top-2 rounded-full border-2 border-rose-gold/50 pulse-ring"></div>
+                        </div>
+                        <div class="md:w-5/12 md:text-left order-3">
+                            <div class="glass-card p-6">
+                                <span class="text-rose-gold font-serif">Tháng 11, 2025</span>
+                                <h4 class="font-script text-2xl text-white my-2">Lời cầu hôn</h4>
+                                <p class="text-white/60">Dưới trời sao, anh đã quỳ xuống và hỏi: "Em có muốn làm vợ anh không?"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 5 - Wedding -->
+                    <div class="relative flex flex-col md:flex-row items-center md:justify-between" data-aos="fade-up" data-aos-delay="400">
+                        <div class="md:w-5/12 md:text-right order-2 md:order-1">
+                            <div class="glass-card p-6 glow-border">
+                                <span class="text-rose-gold font-serif">Tháng 2, 2026</span>
+                                <h4 class="font-script text-2xl text-white my-2">Ngày cưới</h4>
+                                <p class="text-white/60">Và hôm nay, chúng tôi viết tiếp câu chuyện tình yêu với lời hẹn thề trọn đời.</p>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full bg-gradient-to-br from-rose-gold to-champagne z-10 order-1 md:order-2 my-4 md:my-0 flex items-center justify-center">
+                            <i class="fas fa-heart text-white text-xs"></i>
+                        </div>
+                        <div class="md:w-5/12 order-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section id="gallery" class="relative py-24 px-4">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-champagne/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <p class="text-rose-gold uppercase tracking-widest mb-4">Memories</p>
+                <h2 class="font-script text-5xl md:text-6xl text-white mb-4">Album Ảnh</h2>
+                <div class="divider"></div>
+                <div class="divider-icon">
+                    <i class="fas fa-camera text-sm"></i>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gallery Items with Placeholders -->
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 1</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card md:col-span-2 md:row-span-2" data-aos="zoom-in" data-aos-delay="50">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-5xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Ảnh cưới</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 2</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 3</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 4</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="250">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 5</span>
+                    </div>
+                </div>
+                
+                <div class="gallery-item glass-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-full h-full img-placeholder">
+                        <i class="fas fa-image text-3xl"></i>
+                    </div>
+                    <div class="gallery-overlay">
+                        <span class="font-serif text-white">Kỷ niệm 6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- RSVP Section -->
+    <section id="rsvp" class="relative py-24 px-4">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-gold/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="max-w-2xl mx-auto relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <p class="text-rose-gold uppercase tracking-widest mb-4">RSVP</p>
+                <h2 class="font-script text-5xl md:text-6xl text-white mb-4">Xác Nhận Tham Dự</h2>
+                <p class="text-white/60 max-w-lg mx-auto">
+                    Sự hiện diện của bạn sẽ là niềm vinh hạnh lớn lao của chúng tôi. Xin vui lòng xác nhận tham dự trước ngày 01/02/2026.
+                </p>
+                <div class="divider mt-6"></div>
+                <div class="divider-icon">
+                    <i class="fas fa-envelope text-sm"></i>
+                </div>
+            </div>
+            
+            <form id="rsvp-form" class="glass-panel p-8 md:p-10 glow-border" data-aos="fade-up" data-aos-delay="100">
+                <div class="space-y-6">
+                    <!-- Name -->
+                    <div>
+                        <label for="name" class="block text-white/70 mb-2 text-sm">
+                            Họ và tên <span class="text-rose-gold">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            required
+                            placeholder="Nhập họ và tên của bạn"
+                            class="glass-input w-full px-4 py-3 text-white placeholder-white/30"
+                        >
+                    </div>
+                    
+                    <!-- Phone -->
+                    <div>
+                        <label for="phone" class="block text-white/70 mb-2 text-sm">
+                            Số điện thoại <span class="text-rose-gold">*</span>
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            required
+                            placeholder="Nhập số điện thoại"
+                            class="glass-input w-full px-4 py-3 text-white placeholder-white/30"
+                        >
+                    </div>
+                    
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-white/70 mb-2 text-sm">
+                            Email
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            placeholder="Nhập địa chỉ email"
+                            class="glass-input w-full px-4 py-3 text-white placeholder-white/30"
+                        >
+                    </div>
+                    
+                    <!-- Attendance -->
+                    <div>
+                        <label class="block text-white/70 mb-2 text-sm">
+                            Bạn sẽ tham dự? <span class="text-rose-gold">*</span>
+                        </label>
+                        <div class="flex gap-4">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="attendance" value="yes" required class="sr-only peer">
+                                <span class="w-5 h-5 rounded-full border-2 border-white/30 peer-checked:border-rose-gold peer-checked:bg-rose-gold flex items-center justify-center mr-2 transition-all">
+                                    <i class="fas fa-check text-xs text-white opacity-0 peer-checked:opacity-100"></i>
+                                </span>
+                                <span class="text-white/70 peer-checked:text-white">Sẽ tham dự</span>
+                            </label>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="radio" name="attendance" value="no" class="sr-only peer">
+                                <span class="w-5 h-5 rounded-full border-2 border-white/30 peer-checked:border-rose-gold peer-checked:bg-rose-gold flex items-center justify-center mr-2 transition-all">
+                                    <i class="fas fa-check text-xs text-white opacity-0 peer-checked:opacity-100"></i>
+                                </span>
+                                <span class="text-white/70 peer-checked:text-white">Không tham dự</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Number of Guests -->
+                    <div>
+                        <label for="guests" class="block text-white/70 mb-2 text-sm">
+                            Số người tham dự
+                        </label>
+                        <select 
+                            id="guests" 
+                            name="guests"
+                            class="glass-input w-full px-4 py-3 text-white"
+                        >
+                            <option value="1" class="bg-slate-900">1 người</option>
+                            <option value="2" class="bg-slate-900">2 người</option>
+                            <option value="3" class="bg-slate-900">3 người</option>
+                            <option value="4" class="bg-slate-900">4 người</option>
+                            <option value="5" class="bg-slate-900">5+ người</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Message -->
+                    <div>
+                        <label for="message" class="block text-white/70 mb-2 text-sm">
+                            Lời chúc
+                        </label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            rows="4"
+                            placeholder="Gửi lời chúc đến cô dâu và chú rể..."
+                            class="glass-input w-full px-4 py-3 text-white placeholder-white/30 resize-none"
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary w-full text-lg">
+                        <i class="fas fa-paper-plane mr-2"></i> Gửi xác nhận
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Success Message (Hidden by default) -->
+            <div id="success-message" class="hidden glass-panel p-8 text-center glow-border mt-8">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                    <i class="fas fa-check text-3xl text-white"></i>
+                </div>
+                <h3 class="font-script text-3xl text-white mb-4">Cảm ơn bạn!</h3>
+                <p class="text-white/70">Chúng tôi đã nhận được xác nhận của bạn. Hẹn gặp bạn trong ngày vui!</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="relative py-16 px-4 border-t border-white/10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-script text-4xl md:text-5xl text-rose-gold mb-4">Minh Anh & Hoàng Nam</h2>
+            <p class="text-white/50 font-serif text-xl mb-8">15 . 02 . 2026</p>
+            
+            <p class="text-white/40 mb-6">
+                Chúng tôi rất mong được đón tiếp quý khách trong ngày trọng đại!
+            </p>
+            
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-rose-gold/30 transition-colors" aria-label="Facebook">
+                    <i class="fab fa-facebook-f text-lg"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-rose-gold/30 transition-colors" aria-label="Instagram">
+                    <i class="fab fa-instagram text-lg"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-rose-gold/30 transition-colors" aria-label="Email">
+                    <i class="fas fa-envelope text-lg"></i>
+                </a>
+            </div>
+            
+            <p class="text-white/30 text-sm">
+                Made with <i class="fas fa-heart text-rose-gold"></i> for our special day
+            </p>
+        </div>
+    </footer>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top fixed bottom-6 right-6 w-12 h-12 rounded-full glass-card flex items-center justify-center hover:bg-rose-gold/30 transition-all z-40" aria-label="Về đầu trang">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+        
+        // Countdown Timer
+        function updateCountdown() {
+            const weddingDate = new Date('2026-02-15T18:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+            
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Scroll to Top Button
+        const scrollTopBtn = document.getElementById('scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Floating Hearts Animation
+        function createHeart() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = 10 + Math.random() * 10 + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = 10 + Math.random() * 20 + 'px';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 20000);
+        }
+        
+        // Create initial hearts
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 500);
+        }
+        
+        // Continue creating hearts
+        setInterval(createHeart, 2000);
+        
+        // Form Submission
+        const rsvpForm = document.getElementById('rsvp-form');
+        const successMessage = document.getElementById('success-message');
+        
+        rsvpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', data);
+            
+            // Show success message
+            rsvpForm.style.display = 'none';
+            successMessage.classList.remove('hidden');
+            successMessage.classList.add('block');
+            
+            // Reset form
+            rsvpForm.reset();
+        });
+        
+        // Custom Radio Button Visual
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const allSpans = document.querySelectorAll('input[name="' + this.name + '"] + span');
+                allSpans.forEach(span => {
+                    span.querySelector('i').style.opacity = '0';
+                });
+                if (this.checked) {
+                    this.nextElementSibling.querySelector('i').style.opacity = '1';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
