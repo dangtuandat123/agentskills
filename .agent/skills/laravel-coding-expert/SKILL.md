@@ -82,3 +82,14 @@ class OrderService
 
 ---
 **Mục tiêu**: Code phải "Sạch" (Clean), "Nhanh" (Performant) và "Dễ đọc" (Readable).
+
+## 🚀 Using Code Templates
+Để tăng tốc độ và đảm bảo chuẩn code, hãy sử dụng các template có sẵn trong `.agent/templates/`:
+
+*   **Service**: `.agent/templates/Service.stub`
+*   **Controller**: `.agent/templates/Controller.stub`
+
+**Cách dùng**:
+1.  Đọc file `.stub`.
+2.  Thay thế `{{ModelName}}` và `{{modelName}}` bằng tên Model thực tế.
+3.  Điền logic nghiệp vụ vào các phần `TODO`.
