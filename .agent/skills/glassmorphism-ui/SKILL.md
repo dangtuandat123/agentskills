@@ -3,20 +3,49 @@ name: glassmorphism-ui
 description: Chuyên gia thiết kế UI phong cách Premium 3D Glassmorphism (Dark Mode Default). Responsive All Devices, Typography System (VI/EN), Color Palette, Card Design, jQuery Interactions, Accessibility (ARIA, Keyboard Nav).
 ---
 
-# Premium 3D Glassmorphism System (Ultimate Edition v4)
+# Premium 3D Glassmorphism System (Ultimate Edition v6)
 
 Bạn là chuyên gia UI/UX hàng đầu. Nhiệm vụ của bạn là tạo ra giao diện **Glassmorphism** hoàn hảo, bóng bẩy, hiện đại và **dễ tiếp cận (Accessible)**.
 
 ## 1. Triết lý thiết kế (Design Philosophy)
 -   **Dark Mode First:** Giao diện mặc định luôn là nền tối (`bg-slate-950` hoặc `#020617`).
 -   **Mobile First Responsive:** Thiết kế từ mobile lên desktop, sử dụng breakpoints chuẩn.
--   **Performance Optimized:** Sử dụng `will-change: transform` cho element động. Hạn chế `backdrop-filter` diện rộng.
--   **Full Accessibility (a11y):**
-    -   Độ tương phản văn bản đạt chuẩn WCAG AA (Contrast > 4.5:1).
-    -   **ARIA Attributes:** Bắt buộc cho các component tùy chỉnh (Dropdown, Modal, Tab).
-    -   **Full Keyboard Navigation:** Tab, Enter, Escape, Arrow Keys.
-    -   Luôn có trạng thái `:focus-visible` rõ ràng (outline màu tím).
--   **Robust Logic:** Code JS phải xử lý Null check, Event Delegation, và các edge cases.
+-   **Tech Stack Chuẩn:**
+    -   **CSS:** TailwindCSS (Styling), FontAwesome (Icons).
+    -   **JS:** jQuery (Logic), Select2 (Dropdowns).
+    -   **Animation:** CSS Transitions + Keyframes (Performance Optimized).
+-   **Low-tech User Friendliness (Thân thiện với người dùng Low-tech):**
+    -   **Nút bấm lớn:** Kích thước tối thiểu 44x44px cho mọi thao tác chạm.
+    -   **Nhãn rõ ràng:** Không dùng icon đơn độc (trừ khi quá phổ biến như Search/Menu), luôn kèm text label.
+    -   **Phản hồi tức thì:** Mọi cú click đều phải có hiệu ứng (Ripple, Loading, Toast) để người dùng biết hệ thống đang xử lý.
+    -   **Tránh ẩn giấu:** Hạn chế các menu ẩn sâu, thao tác vuốt phức tạp.
+
+## 1.1 Quy trình Tư duy Thiết kế & Tự Kiểm Tra (Critical Design Protocol)
+**BẮT BUỘC:** Trước khi code bất kỳ component nào, bạn phải thực hiện các bước sau:
+
+### Bước 1: Suy luận Thiết kế (Design Reasoning)
+Tự đặt câu hỏi phản biện:
+1.  **"Thiết kế như vậy có hợp lý không?"**
+    -   *Ví dụ:* Tại sao dùng Modal ở đây? Người dùng có bị mất ngữ cảnh không?
+    -   *Ví dụ:* Nút "Lưu" đặt ở góc trái có thuận tay người dùng mobile không?
+2.  **"Component này có đúng mục đích không?"**
+    -   Dropdown này có quá nhiều item không? Nếu > 10 item thì phải có Search (dùng Select2).
+    -   Nếu chỉ có 2 option (Nam/Nữ), tại sao không dùng Radio Button cho nhanh?
+
+### Bước 2: Liệt kê Lỗi & Xung đột Tiềm ẩn (Pre-flight Check)
+Tự liệt kê các vấn đề có thể xảy ra và cách giải quyết:
+-   **Conflict:** Component này có đè lên Header/Footer khi scroll không? (Z-index check).
+-   **Interaction:** Khi mở Modal, Dropdown bên dưới có bị lòi ra không?
+-   **Data:** Nếu dữ liệu dài quá thì giao diện có vỡ không? (Text overflow check).
+-   **Mobile:** Trên màn hình nhỏ (iPhone SE), nút này có bị che bởi bàn phím ảo không?
+
+### Bước 3: Giải quyết & Sáng tạo
+-   Sau khi liệt kê lỗi, hãy đưa ra giải pháp ngay trong code (ví dụ: thêm `z-50`, `truncate`, `overflow-y-auto`).
+-   **Sáng tạo:** Đừng làm nhàm chán. Thêm chút "gia vị" (glow effect, glass border) để giao diện trông Premium.
+
+### Bước 4: Kiểm tra Tương tác (Interaction Check)
+-   Đảm bảo các thành phần tương tác mượt mà với nhau.
+-   Ví dụ: Chọn Dropdown -> Tự động focus vào Input tiếp theo.
 
 ---
 
@@ -30,8 +59,13 @@ Bạn là chuyên gia UI/UX hàng đầu. Nhiệm vụ của bạn là tạo ra 
   <!-- Font Stack: Vietnamese + English -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- jQuery & Select2 -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <style>
     :root {
@@ -247,57 +281,75 @@ Bạn là chuyên gia UI/UX hàng đầu. Nhiệm vụ của bạn là tạo ra 
       background-clip: text;
     }
 
-    /* ========== DROPDOWN STYLES ========== */
-    .glass-dropdown { position: relative; width: 100%; z-index: var(--z-dropdown); }
-    .glass-dropdown-select {
-      background: rgba(0, 0, 0, 0.3);
+    /* ========== SELECT2 CUSTOMIZATION (Glassmorphism) ========== */
+    .select2-container { width: 100% !important; }
+    
+    .select2-container--default .select2-selection--single {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid var(--color-border-subtle) !important;
+      border-radius: var(--radius-xl) !important;
+      height: 50px !important;
+      display: flex !important;
+      align-items: center !important;
       backdrop-filter: blur(10px);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: var(--radius-xl);
-      padding: var(--space-3) var(--space-5);
-      color: var(--color-text-primary);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       transition: all var(--transition-base);
-      font-size: var(--text-base);
     }
-    @media (min-width: 768px) { 
-      .glass-dropdown-select { padding: var(--space-4) var(--space-5); } 
+    
+    .select2-container--default .select2-selection--single:hover,
+    .select2-container--default.select2-container--open .select2-selection--single {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: var(--color-border-strong) !important;
     }
-    .glass-dropdown-select:hover, .glass-dropdown-select:focus {
-      background: var(--color-surface-glass-hover);
-      border-color: var(--color-border-strong);
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      color: var(--color-text-primary) !important;
+      padding-left: var(--space-5) !important;
+      font-size: var(--text-base) !important;
+      font-family: var(--font-default) !important;
     }
-    .glass-dropdown-list {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0; right: 0;
-      background: var(--color-surface-overlay);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      opacity: 0; visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: var(--shadow-xl);
-      max-height: 300px;
-      overflow-y: auto;
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 48px !important;
+      right: var(--space-4) !important;
     }
-    .glass-dropdown.active .glass-dropdown-list { opacity: 1; visibility: visible; transform: translateY(0); }
-    .glass-dropdown-option {
-      padding: var(--space-3) var(--space-5);
-      color: var(--color-text-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+      border-color: var(--color-text-muted) transparent transparent transparent !important;
     }
-    .glass-dropdown-option:hover, .glass-dropdown-option:focus, .glass-dropdown-option.highlighted { 
-      background: var(--color-surface-glass-hover); 
-      color: var(--color-text-primary); 
-      outline: none;
+
+    /* Dropdown Menu */
+    .select2-dropdown {
+      background: var(--color-surface-elevated) !important;
+      border: 1px solid var(--color-border-subtle) !important;
+      border-radius: var(--radius-xl) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-xl) !important;
+      overflow: hidden !important;
+      z-index: var(--z-dropdown) !important;
     }
-    .glass-dropdown-option.selected { background: rgba(236, 72, 153, 0.2); color: var(--color-text-primary); }
+
+    .select2-search--dropdown .select2-search__field {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid var(--color-border-subtle) !important;
+      border-radius: var(--radius-md) !important;
+      color: var(--color-text-primary) !important;
+      padding: var(--space-2) var(--space-3) !important;
+    }
+
+    .select2-results__option {
+      padding: var(--space-3) var(--space-5) !important;
+      color: var(--color-text-secondary) !important;
+      font-size: var(--text-base) !important;
+    }
+
+    .select2-results__option--highlighted[aria-selected] {
+      background: var(--color-primary-600) !important;
+      color: white !important;
+    }
+
+    .select2-results__option[aria-selected="true"] {
+      background: rgba(236, 72, 153, 0.2) !important;
+      color: var(--color-text-primary) !important;
+    }
 
     /* ========== FORM STATES ========== */
     .input-error {
@@ -657,25 +709,16 @@ Bạn là chuyên gia UI/UX hàng đầu. Nhiệm vụ của bạn là tạo ra 
 
 ---
 
-## 6. Dropdown: HTML Template (Accessible)
+## 6. Dropdown: Select2 Implementation (Standard)
 
 ```html
-<!-- ARIA: role, aria-haspopup, aria-expanded, aria-labelledby -->
-<div class="glass-dropdown" id="my-dropdown">
-  <div class="glass-dropdown-select" 
-       tabindex="0" 
-       role="combobox" 
-       aria-haspopup="listbox" 
-       aria-expanded="false" 
-       aria-labelledby="dropdown-label">
-    <span class="selected-text">Chọn một mục</span>
-    <i class="fa-solid fa-chevron-down text-xs opacity-50 transition-transform"></i>
-  </div>
-  <div class="glass-dropdown-list" role="listbox" aria-labelledby="dropdown-label">
-    <div class="glass-dropdown-option" role="option" tabindex="-1" data-value="1">Mục 1</div>
-    <div class="glass-dropdown-option" role="option" tabindex="-1" data-value="2">Mục 2</div>
-  </div>
-  <input type="hidden" name="my_field" value="">
+<div class="w-full">
+  <label class="block text-sm text-white/70 mb-2">Chọn tùy chọn</label>
+  <select class="glass-select2" name="state">
+    <option value="AL">Alabama</option>
+    <option value="WY">Wyoming</option>
+    <option value="NY">New York</option>
+  </select>
 </div>
 ```
 
@@ -685,238 +728,216 @@ Bạn là chuyên gia UI/UX hàng đầu. Nhiệm vụ của bạn là tạo ra 
 
 ```javascript
 $(document).ready(function() {
-    /* ========== DROPDOWN (Keyboard + ARIA) ========== */
-    function closeAllDropdowns() {
-        $('.glass-dropdown').removeClass('active')
-            .find('.glass-dropdown-select').attr('aria-expanded', 'false');
-        $('.glass-dropdown-option').removeClass('highlighted');
-    }
-
-    $(document).on('click', function(e) { 
-        if (!$(e.target).closest('.glass-dropdown').length) closeAllDropdowns(); 
-    });
-    $(document).on('keydown', function(e) { 
-        if (e.key === 'Escape') closeAllDropdowns(); 
+    
+    /* ========== INITIALIZE SELECT2 ========== */
+    $('.glass-select2').select2({
+        minimumResultsForSearch: 10, // Hide search if < 10 items
+        width: '100%'
     });
 
-    $('.glass-dropdown').each(function() {
-        const $dropdown = $(this);
-        const $select = $dropdown.find('.glass-dropdown-select');
-        const $options = $dropdown.find('.glass-dropdown-option');
-        const $hidden = $dropdown.find('input[type="hidden"]');
-        const $text = $dropdown.find('.selected-text');
-        let highlightedIndex = -1;
-
-        function toggleDropdown() {
-            const isActive = $dropdown.hasClass('active');
-            closeAllDropdowns();
-            if (!isActive) {
-                $dropdown.addClass('active');
-                $select.attr('aria-expanded', 'true');
-                highlightedIndex = $options.filter('.selected').index();
-                if (highlightedIndex === -1) highlightedIndex = 0;
-                updateHighlight();
-            }
-        }
-
-        function updateHighlight() {
-            $options.removeClass('highlighted').eq(highlightedIndex).addClass('highlighted')
-                .get(0)?.scrollIntoView({ block: 'nearest' });
-        }
-
-        function selectOption($opt) {
-            $text.text($opt.text());
-            $hidden.val($opt.data('value')).trigger('change');
-            $options.removeClass('selected');
-            $opt.addClass('selected');
-            closeAllDropdowns();
-            $select.focus();
-        }
-
-        $select.on('click', function(e) { e.stopPropagation(); toggleDropdown(); });
-        $select.on('keydown', function(e) {
-            const isActive = $dropdown.hasClass('active');
-            if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(e.key)) e.preventDefault();
-
-            if (e.key === 'ArrowDown') {
-                if (!isActive) toggleDropdown();
-                else { highlightedIndex = (highlightedIndex + 1) % $options.length; updateHighlight(); }
-            } else if (e.key === 'ArrowUp') {
-                if (!isActive) toggleDropdown();
-                else { highlightedIndex = (highlightedIndex - 1 + $options.length) % $options.length; updateHighlight(); }
-            } else if (e.key === 'Enter' || e.key === ' ') {
-                if (isActive && highlightedIndex >= 0) selectOption($options.eq(highlightedIndex));
-                else toggleDropdown();
-            }
-        });
-
-        $options.on('click', function() { selectOption($(this)); });
-        $options.on('mouseenter', function() { highlightedIndex = $(this).index(); updateHighlight(); });
-    });
-
-    /* ========== MODAL (Escape + Click Outside + Focus Trap) ========== */
-    $(document).on('click', '[data-modal-target]', function(e) {
+    /* ========== MODAL (jQuery) ========== */
+    $('[data-modal-target]').on('click', function(e) {
         e.preventDefault();
-        const $modal = $($(this).data('modal-target'));
-        if (!$modal.length) return;
+        const targetId = $(this).data('modal-target');
+        const $modal = $(targetId);
         
-        $modal.removeClass('hidden').attr('aria-hidden', 'false');
-        setTimeout(() => $modal.find('.modal-content').removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100'), 10);
-        $('body').addClass('overflow-hidden');
-        $modal.find('[data-modal-close]').first().focus();
-    });
-
-    function closeModal($modal) {
-        if (!$modal || !$modal.length) return;
-        $modal.find('.modal-content').removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
-        $modal.attr('aria-hidden', 'true');
-        setTimeout(() => { $modal.addClass('hidden'); $('body').removeClass('overflow-hidden'); }, 300);
-    }
-
-    $(document).on('click', '[data-modal-close]', function() { closeModal($(this).closest('.fixed')); });
-    $(document).on('click', '.modal-overlay', function(e) { if (e.target === this) closeModal($(this).closest('.fixed')); });
-    $(document).on('keydown', function(e) { if (e.key === 'Escape') closeModal($('.fixed[aria-hidden="false"]')); });
-
-    /* ========== TABS (Accessible) ========== */
-    $('.glass-tabs').each(function() {
-        const $tabs = $(this);
-        const $buttons = $tabs.find('[role="tab"]');
-        const $contents = $tabs.find('[role="tabpanel"]');
-
-        function activateTab($btn) {
-            $buttons.attr('aria-selected', 'false').removeClass('active');
-            $contents.addClass('hidden');
+        if ($modal.length) {
+            $modal.removeClass('hidden').attr('aria-hidden', 'false');
+            $('body').addClass('overflow-hidden');
             
-            $btn.attr('aria-selected', 'true').addClass('active');
-            $($btn.attr('aria-controls')).removeClass('hidden');
+            // Animation
+            const $content = $modal.find('.modal-content');
+            setTimeout(() => {
+                $content.removeClass('scale-95 opacity-0').addClass('scale-100 opacity-100');
+            }, 10);
         }
-
-        $buttons.on('click', function() { activateTab($(this)); });
-        $buttons.on('keydown', function(e) {
-            const idx = $buttons.index(this);
-            if (e.key === 'ArrowRight') { e.preventDefault(); $buttons.eq((idx + 1) % $buttons.length).focus().click(); }
-            if (e.key === 'ArrowLeft') { e.preventDefault(); $buttons.eq((idx - 1 + $buttons.length) % $buttons.length).focus().click(); }
-        });
     });
 
-    /* ========== ACCORDION ========== */
-    $(document).on('click', '.glass-accordion-trigger', function() {
-        const $item = $(this).closest('.glass-accordion-item');
+    $('[data-modal-close], .modal-overlay').on('click', function() {
+        const $modal = $(this).closest('.fixed'); // Assuming modal wrapper has .fixed
+        const $content = $modal.find('.modal-content');
+        
+        $content.removeClass('scale-100 opacity-100').addClass('scale-95 opacity-0');
+        
+        setTimeout(() => {
+            $modal.addClass('hidden').attr('aria-hidden', 'true');
+            $('body').removeClass('overflow-hidden');
+        }, 300);
+    });
+
+    /* ========== TABS (jQuery) ========== */
+    $('.glass-tabs [role="tab"]').on('click', function() {
+        const $btn = $(this);
+        const targetId = $btn.attr('aria-controls');
+        const $group = $btn.closest('.glass-tabs');
+        
+        // Deactivate all in group
+        $group.find('[role="tab"]').attr('aria-selected', 'false').removeClass('active');
+        $group.find('[role="tabpanel"]').addClass('hidden');
+        
+        // Activate clicked
+        $btn.attr('aria-selected', 'true').addClass('active');
+        $('#' + targetId).removeClass('hidden');
+    });
+
+    /* ========== ACCORDION (jQuery) ========== */
+    $('.glass-accordion-trigger').on('click', function() {
+        const $trigger = $(this);
+        const $item = $trigger.closest('.glass-accordion-item');
         const $content = $item.find('.glass-accordion-content');
-        const isOpen = $item.hasClass('open');
-
-        // Close others (single open mode)
-        if (!$item.closest('.glass-accordion').hasClass('multi')) {
-            $item.siblings().removeClass('open').find('.glass-accordion-content').slideUp(300);
+        const $parent = $item.closest('.glass-accordion');
+        
+        // Close others if not multi-select
+        if ($parent.length && !$parent.hasClass('multi')) {
+            $parent.find('.glass-accordion-item.open').not($item).each(function() {
+                $(this).removeClass('open');
+                $(this).find('.glass-accordion-content').css('max-height', '');
+            });
         }
-
-        if (isOpen) {
+        
+        if ($item.hasClass('open')) {
             $item.removeClass('open');
-            $content.slideUp(300);
+            $content.css('max-height', '');
         } else {
             $item.addClass('open');
-            $content.slideDown(300);
+            $content.css('max-height', $content[0].scrollHeight + 'px');
         }
     });
 
     /* ========== SMOOTH SCROLL ========== */
-    $(document).on('click', 'a[href^="#"]', function(e) {
-        const target = $(this.getAttribute('href'));
-        if (target.length) {
+    $('a[href^="#"]').on('click', function(e) {
+        const targetId = $(this).attr('href');
+        const $target = $(targetId);
+        
+        if ($target.length) {
             e.preventDefault();
-            $('html, body').animate({ scrollTop: target.offset().top - 80 }, 500);
+            const headerOffset = 80;
+            const elementPosition = $target.offset().top;
+            const offsetPosition = elementPosition - headerOffset;
+            
+            $('html, body').animate({
+                scrollTop: offsetPosition
+            }, 800);
         }
     });
 
     /* ========== SCROLL REVEAL ========== */
-    const $revealElements = $('[data-reveal]');
-    function checkReveal() {
-        const windowHeight = $(window).height();
-        const scrollTop = $(window).scrollTop();
-        
-        $revealElements.each(function() {
-            const $el = $(this);
-            const elTop = $el.offset().top;
-            const delay = $el.data('reveal-delay') || 0;
-            
-            if (scrollTop + windowHeight > elTop + 50) {
-                setTimeout(() => $el.addClass('revealed'), delay);
+    const checkReveal = () => {
+        const triggerBottom = $(window).height() * 0.85;
+        $('[data-reveal]').each(function() {
+            const boxTop = $(this).offset().top - $(window).scrollTop();
+            if (boxTop < triggerBottom) {
+                const delay = $(this).data('reveal-delay') || 0;
+                setTimeout(() => $(this).addClass('revealed'), delay);
             }
         });
-    }
+    };
     $(window).on('scroll load', checkReveal);
 
-    /* ========== LAZY LOAD IMAGES ========== */
+    /* ========== RIPPLE EFFECT ========== */
+    $('.ripple').on('click', function(e) {
+        const $btn = $(this);
+        const offset = $btn.offset();
+        const x = e.pageX - offset.left;
+        const y = e.pageY - offset.top;
+        
+        const $circle = $('<span class="ripple-effect"></span>');
+        $circle.css({ top: y, left: x });
+        
+        $btn.append($circle);
+        setTimeout(() => $circle.remove(), 600);
+    });
+
+    /* ========== COUNTER ANIMATION ========== */
+    // Simple Intersection Observer wrapper for jQuery elements
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const $el = $(entry.target);
+                const target = parseInt($el.data('counter'));
+                const duration = parseInt($el.data('counter-duration')) || 2000;
+                
+                $({ countNum: 0 }).animate({ countNum: target }, {
+                    duration: duration,
+                    easing: 'linear',
+                    step: function() {
+                        $el.text(Math.floor(this.countNum).toLocaleString());
+                    },
+                    complete: function() {
+                        $el.text(this.countNum.toLocaleString());
+                    }
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    
+    $('[data-counter]').each(function() {
+        observer.observe(this);
+    });
+
+    /* ========== LAZY LOAD (jQuery) ========== */
     if ('IntersectionObserver' in window) {
-        const lazyObserver = new IntersectionObserver((entries) => {
+        const lazyObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const $img = $(entry.target);
-                    $img.attr('src', $img.data('src')).removeAttr('data-src');
-                    lazyObserver.unobserve(entry.target);
+                    $img.attr('src', $img.data('src'));
+                    $img.removeAttr('data-src');
+                    observer.unobserve(entry.target);
                 }
             });
         }, { rootMargin: '50px' });
         
-        $('img[data-src]').each(function() { lazyObserver.observe(this); });
+        $('img[data-src]').each(function() {
+            lazyObserver.observe(this);
+        });
     }
 
-    /* ========== RIPPLE EFFECT ========== */
-    $(document).on('click', '.ripple', function(e) {
-        const $btn = $(this);
-        const $ripple = $('<span class="ripple-effect"></span>');
-        const btnOffset = $btn.offset();
-        const x = e.pageX - btnOffset.left;
-        const y = e.pageY - btnOffset.top;
-        
-        $ripple.css({ left: x, top: y });
-        $btn.append($ripple);
-        setTimeout(() => $ripple.remove(), 600);
-    });
-
-    /* ========== COUNTER ANIMATION ========== */
-    $('[data-counter]').each(function() {
-        const $el = $(this);
-        const target = parseInt($el.data('counter'));
-        const duration = $el.data('counter-duration') || 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-                const interval = setInterval(() => {
-                    current += step;
-                    if (current >= target) { current = target; clearInterval(interval); }
-                    $el.text(Math.floor(current).toLocaleString());
-                }, 16);
-                observer.unobserve($el[0]);
-            }
-        });
-        observer.observe($el[0]);
-    });
-
-    /* ========== PARALLAX EFFECT ========== */
+    /* ========== PARALLAX (jQuery) ========== */
     $(window).on('scroll', function() {
-        const scrolled = $(this).scrollTop();
+        const scrolled = $(window).scrollTop();
         $('[data-parallax]').each(function() {
-            const $el = $(this);
-            const speed = $el.data('parallax') || 0.5;
-            $el.css('transform', `translateY(${scrolled * speed}px)`);
+            const speed = $(this).data('parallax') || 0.5;
+            $(this).css('transform', `translateY(${scrolled * speed}px)`);
         });
     });
 });
+```
 
 /* ========== TOAST NOTIFICATION HELPER ========== */
-function showToast(message, type = 'success', duration = 3000) {
+/* ========== TOAST NOTIFICATION HELPER (jQuery) ========== */
+window.showToast = (message, type = 'success', duration = 3000) => {
     let $container = $('.toast-container');
-    if (!$container.length) { $('body').append('<div class="toast-container"></div>'); $container = $('.toast-container'); }
+    if (!$container.length) {
+        $container = $('<div class="toast-container"></div>').appendTo('body');
+    }
     
-    const icon = { success: 'fa-circle-check', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' }[type] || 'fa-circle-info';
-    const $toast = $(`<div class="toast ${type}"><i class="fa-solid ${icon}"></i> ${message}</div>`);
+    const iconMap = {
+        success: 'fa-circle-check',
+        error: 'fa-circle-xmark',
+        warning: 'fa-triangle-exclamation',
+        info: 'fa-circle-info'
+    };
+    const iconClass = iconMap[type] || iconMap.info;
+    
+    const $toast = $(`
+        <div class="toast ${type}">
+            <i class="fa-solid ${iconClass}"></i> ${message}
+        </div>
+    `);
+    
     $container.append($toast);
     
-    setTimeout(() => { $toast.css({ opacity: 0, transform: 'translateX(100%)' }); setTimeout(() => $toast.remove(), 300); }, duration);
-}
+    setTimeout(() => {
+        $toast.css({ 
+            opacity: 0, 
+            transform: 'translateX(100%)', 
+            transition: 'all 0.3s ease' 
+        });
+        setTimeout(() => $toast.remove(), 300);
+    }, duration);
+};
 ```
 
 ---
@@ -1088,7 +1109,7 @@ function showToast(message, type = 'success', duration = 3000) {
 | Color Palette (CSS Variables) | ✅ |
 | Card Components | ✅ |
 | Button System | ✅ |
-| Dropdown (ARIA + Keyboard) | ✅ |
+| Dropdown (Select2) | ✅ |
 | Modal (Focus Trap) | ✅ |
 | Tabs (Accessible) | ✅ |
 | Accordion | ✅ |
@@ -1100,3 +1121,4 @@ function showToast(message, type = 'success', duration = 3000) {
 | Ripple Effect | ✅ |
 | Counter Animation | ✅ |
 | Gradient Animations | ✅ |
+

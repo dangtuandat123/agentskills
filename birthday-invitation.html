@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Thiệp Mời Sinh Nhật - Alex 25 Tuổi</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'display': ['Outfit', 'sans-serif'],
+                        'body': ['Be Vietnam Pro', 'sans-serif'],
+                    },
+                    colors: {
+                        'neon-pink': '#ff00ff',
+                        'neon-blue': '#00ffff',
+                        'neon-purple': '#bf00ff',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1, boxShadow: '0 0 20px rgba(191, 0, 255, 0.5)' },
+                            '50%': { opacity: .8, boxShadow: '0 0 40px rgba(191, 0, 255, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background: radial-gradient(circle at top left, #2e1065, #000000, #172554);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Glass Engine Layers */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-input:focus {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(0, 255, 255, 0.5);
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Countdown Box */
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .shimmer-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Background Orbs -->
+    <div class="orb w-96 h-96 bg-purple-600 top-[-100px] left-[-100px] animate-float fixed"></div>
+    <div class="orb w-80 h-80 bg-blue-600 bottom-[-50px] right-[-50px] animate-float-delayed fixed"></div>
+    <div class="orb w-64 h-64 bg-pink-600 top-[40%] left-[60%] animate-float opacity-40 fixed"></div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Main Container -->
+    <main class="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        
+        <!-- Hero Section -->
+        <section class="text-center mb-8">
+            <p class="font-display font-medium text-neon-blue tracking-[0.3em] uppercase mb-2 text-sm animate-pulse">You Are Invited To</p>
+            <h1 class="font-display font-black text-5xl md:text-7xl leading-tight">
+                <span class="block text-white drop-shadow-lg">HAPPY</span>
+                <span class="text-gradient">BIRTHDAY</span>
+            </h1>
+        </section>
+
+        <!-- Card Container -->
+        <div class="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-stretch">
+            
+            <!-- Left: Invitation Card -->
+            <div class="glass-card rounded-3xl p-6 md:p-10 relative overflow-hidden shimmer-effect">
+                
+                <!-- Birthday Person Info -->
+                <div class="text-center mb-6">
+                    <div class="relative inline-block">
+                        <!-- Avatar with Gradient Border -->
+                        <div class="w-28 h-28 mx-auto rounded-full p-1 bg-gradient-to-br from-neon-pink to-neon-blue animate-pulse-glow">
+                            <img src="https://i.pravatar.cc/150?img=12" alt="Alex" class="w-full h-full rounded-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-neon-purple to-neon-blue px-4 py-1 rounded-full text-xs font-bold shadow-lg whitespace-nowrap">
+                            🎉 ALEX TURNS 25 🎉
+                        </div>
+                    </div>
+                    <h2 class="font-display font-bold text-2xl mt-6 text-white">Nguyễn Thanh Alex</h2>
+                    <p class="text-white/60 text-sm">Mời bạn đến dự tiệc sinh nhật của mình!</p>
+                </div>
+
+                <!-- Birthday Cake Image -->
+                <div class="my-6 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="./images/birthday_cake.png" alt="Birthday Cake" class="w-full h-48 object-cover hover:scale-110 transition-transform duration-500">
+                </div>
+
+                <!-- Event Details -->
+                <div class="space-y-4 font-body">
+                    <div class="flex items-center gap-4 text-white/90 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-pink/20 to-neon-purple/20 flex items-center justify-center text-neon-pink border border-neon-pink/30">
+                            <i class="far fa-calendar-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-white/50 uppercase font-bold">Ngày</p>
+                            <p class="font-semibold text-lg">Thứ Bảy, 25/10/2026</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-white/90 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 flex items-center justify-center text-neon-blue border border-neon-blue/30">
+                            <i class="far fa-clock text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-white/50 uppercase font-bold">Thời gian</p>
+                            <p class="font-semibold text-lg">19:00 - 23:00</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 text-white/90 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-pink/20 flex items-center justify-center text-neon-purple border border-neon-purple/30">
+                            <i class="fas fa-map-marker-alt text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-white/50 uppercase font-bold">Địa điểm</p>
+                            <p class="font-semibold text-lg">Skyline Rooftop Bar</p>
+                            <p class="text-xs text-white/40">123 Nguyễn Huệ, Quận 1, TP.HCM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Countdown + RSVP -->
+            <div class="flex flex-col gap-6">
+                
+                <!-- Countdown Section -->
+                <div class="glass-card rounded-3xl p-6 text-center">
+                    <h3 class="font-display font-bold text-xl mb-4 text-white/80">⏳ Đếm Ngược Đến Tiệc</h3>
+                    <div id="countdown" class="grid grid-cols-4 gap-3">
+                        <div class="countdown-box rounded-xl p-4">
+                            <span id="days" class="block text-3xl md:text-4xl font-black text-gradient">00</span>
+                            <span class="text-xs text-white/50 uppercase">Ngày</span>
+                        </div>
+                        <div class="countdown-box rounded-xl p-4">
+                            <span id="hours" class="block text-3xl md:text-4xl font-black text-gradient">00</span>
+                            <span class="text-xs text-white/50 uppercase">Giờ</span>
+                        </div>
+                        <div class="countdown-box rounded-xl p-4">
+                            <span id="minutes" class="block text-3xl md:text-4xl font-black text-gradient">00</span>
+                            <span class="text-xs text-white/50 uppercase">Phút</span>
+                        </div>
+                        <div class="countdown-box rounded-xl p-4">
+                            <span id="seconds" class="block text-3xl md:text-4xl font-black text-gradient">00</span>
+                            <span class="text-xs text-white/50 uppercase">Giây</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RSVP Form -->
+                <div class="glass-card rounded-3xl p-6 flex-grow">
+                    <h3 class="font-display font-bold text-xl mb-2 text-white">📝 Xác nhận tham dự</h3>
+                    <p class="text-white/50 text-sm mb-6">Cho mình biết bạn có đến được không nhé!</p>
+
+                    <form id="rsvp-form" class="space-y-4">
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-white/70 ml-1 block mb-1">Họ và tên</label>
+                            <input type="text" placeholder="Nhập tên của bạn..." class="w-full px-4 py-3 rounded-xl glass-input" required>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-white/70 ml-1 block mb-1">Số điện thoại</label>
+                            <input type="tel" placeholder="0912 xxx xxx" class="w-full px-4 py-3 rounded-xl glass-input">
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-white/70 ml-1 block mb-2">Bạn có tham dự?</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="attend" value="yes" class="peer sr-only" checked>
+                                    <div class="p-3 rounded-xl glass-input text-center peer-checked:bg-green-500/20 peer-checked:border-green-500 peer-checked:text-green-400 transition-all hover:bg-white/5">
+                                        <i class="fas fa-check mb-1 block text-lg"></i> Có, tôi sẽ đến!
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="attend" value="no" class="peer sr-only">
+                                    <div class="p-3 rounded-xl glass-input text-center peer-checked:bg-red-500/20 peer-checked:border-red-500 peer-checked:text-red-400 transition-all hover:bg-white/5">
+                                        <i class="fas fa-times mb-1 block text-lg"></i> Xin lỗi, bận rồi
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-bold uppercase tracking-wider text-white/70 ml-1 block mb-1">Lời nhắn</label>
+                            <textarea placeholder="Gửi lời chúc đến Alex..." rows="2" class="w-full px-4 py-3 rounded-xl glass-input resize-none"></textarea>
+                        </div>
+
+                        <button type="button" onclick="submitRSVP(this)" class="w-full py-4 rounded-xl bg-gradient-to-r from-neon-pink via-neon-purple to-neon-blue font-bold text-lg shadow-lg shadow-purple-500/30 hover:shadow-purple-500/60 hover:scale-[1.02] transition-all active:scale-95">
+                            <i class="fas fa-paper-plane mr-2"></i> GỬI XÁC NHẬN
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-white/40 text-sm">
+            <p>Made with ❤️ by Alex | Dress Code: Smart Casual</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Countdown Timer
+        const targetDate = new Date('2026-10-25T19:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<p class="col-span-4 text-2xl text-neon-pink font-bold">🎉 Tiệc đang diễn ra!</p>';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // RSVP Submit
+        function submitRSVP(btn) {
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> Đã gửi thành công!';
+                btn.classList.remove('from-neon-pink', 'via-neon-purple', 'to-neon-blue');
+                btn.classList.add('bg-green-500');
+                fireConfetti();
+            }, 1500);
+        }
+
+        // Confetti Effect
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const colors = ['#ff00ff', '#00ffff', '#bf00ff', '#ffffff', '#ffff00'];
+
+        function fireConfetti() {
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    vx: (Math.random() - 0.5) * 25,
+                    vy: (Math.random() - 0.5) * 25 - 5,
+                    size: Math.random() * 10 + 3,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 120
+                });
+            }
+            animateConfetti();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.25;
+                p.life--;
+                p.size *= 0.98;
+
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (p.life <= 0 || p.size < 0.5) particles.splice(index, 1);
+            });
+
+            if (particles.length > 0) requestAnimationFrame(animateConfetti);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
