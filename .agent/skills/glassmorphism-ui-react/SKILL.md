@@ -23,7 +23,7 @@ Bạn là chuyên gia UI/UX hàng đầu về ReactJS. Nhiệm vụ của bạn 
 | **UI Framework** | React 18+ | Core framework |
 | **Styling** | TailwindCSS 3.4+ | Utility-first CSS |
 | **Components** | Radix UI Primitives | Accessible, unstyled components |
-| **Icons** | Lucide React / Heroicons | Modern icon set |
+| **Icons** | Lucide React / Heroicons / FontAwesome | Modern icon sets |
 | **Animation** | Framer Motion | Smooth animations |
 | **State** | Zustand / Jotai | Lightweight state management |
 | **Forms** | React Hook Form + Zod | Form handling + validation |
@@ -240,6 +240,144 @@ export const glassStyles = {
   card: 'bg-white/[0.03] backdrop-blur-[12px] border border-white/[0.08] rounded-xl shadow-glass-lg',
   hover: 'hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-200',
 };
+```
+
+### 3.4 Icon Libraries Setup
+
+#### FontAwesome (React)
+
+```bash
+# Install FontAwesome
+npm install @fortawesome/fontawesome-svg-core \
+            @fortawesome/free-solid-svg-icons \
+            @fortawesome/free-regular-svg-icons \
+            @fortawesome/free-brands-svg-icons \
+            @fortawesome/react-fontawesome
+```
+
+```tsx
+// lib/fontawesome.ts - Setup file (import once in _app.tsx hoặc layout.tsx)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
+// Prevent FA from adding CSS (we import it manually)
+config.autoAddCss = false;
+
+// Import icons bạn cần (tree-shaking friendly)
+import { 
+  faHome, faUser, faCog, faBell, faSearch,
+  faChevronDown, faCheck, faTimes, faPlus,
+  faEdit, faTrash, faSave, faSpinner
+} from '@fortawesome/free-solid-svg-icons';
+
+import { 
+  faHeart as faHeartRegular,
+  faBell as faBellRegular 
+} from '@fortawesome/free-regular-svg-icons';
+
+import { 
+  faGithub, faTwitter, faFacebook, faLinkedin 
+} from '@fortawesome/free-brands-svg-icons';
+
+// Add to library (global access)
+library.add(
+  faHome, faUser, faCog, faBell, faSearch,
+  faChevronDown, faCheck, faTimes, faPlus,
+  faEdit, faTrash, faSave, faSpinner,
+  faHeartRegular, faBellRegular,
+  faGithub, faTwitter, faFacebook, faLinkedin
+);
+```
+
+```tsx
+// Usage in components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faUser, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+
+// Basic usage
+<FontAwesomeIcon icon={faHome} className="h-5 w-5 text-white/70" />
+
+// With sizing (use className for consistency with Tailwind)
+<FontAwesomeIcon icon={faUser} className="h-4 w-4" />
+<FontAwesomeIcon icon={faUser} className="h-6 w-6" />
+
+// Spinning (for loading states)
+<FontAwesomeIcon icon={faSpinner} className="h-5 w-5 animate-spin" />
+
+// Brand icons
+<FontAwesomeIcon icon={faGithub} className="h-5 w-5" />
+
+// In buttons (glassmorphism style)
+<button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.05] text-white/80 hover:bg-white/[0.08] transition-colors">
+  <FontAwesomeIcon icon={faHome} className="h-4 w-4" />
+  <span>Trang chủ</span>
+</button>
+```
+
+#### Lucide React (Alternative - Recommended)
+
+```bash
+npm install lucide-react
+```
+
+```tsx
+// Lucide có tree-shaking tốt hơn và icons nhẹ hơn
+import { Home, User, Settings, Bell, Search, ChevronDown } from 'lucide-react';
+
+// Usage - same as any React component
+<Home className="h-5 w-5 text-white/70" />
+<User className="h-4 w-4" />
+<Settings className="h-6 w-6 text-primary-400" />
+```
+
+#### Icon Component Wrapper (cho cả 2 libraries)
+
+```tsx
+// components/ui/Icon.tsx
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { type LucideIcon } from 'lucide-react';
+import { cn } from '@/utils/cn';
+
+type IconProps = {
+  className?: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+} & (
+  | { fa: IconDefinition; lucide?: never }
+  | { lucide: LucideIcon; fa?: never }
+);
+
+const sizeClasses = {
+  xs: 'h-3 w-3',
+  sm: 'h-4 w-4',
+  md: 'h-5 w-5',
+  lg: 'h-6 w-6',
+  xl: 'h-8 w-8',
+};
+
+export function Icon({ fa, lucide, size = 'md', className }: IconProps) {
+  const sizeClass = sizeClasses[size];
+  
+  if (fa) {
+    return <FontAwesomeIcon icon={fa} className={cn(sizeClass, className)} />;
+  }
+  
+  if (lucide) {
+    const LucideIcon = lucide;
+    return <LucideIcon className={cn(sizeClass, className)} />;
+  }
+  
+  return null;
+}
+
+// Usage
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { Settings } from 'lucide-react';
+
+<Icon fa={faHome} size="md" className="text-white/70" />
+<Icon lucide={Settings} size="lg" className="text-primary-400" />
 ```
 
 ---
